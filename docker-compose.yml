@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  # Frontend - SmartHome Monitor Dashboard
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smarthome-frontend
+    ports:
+      - "80:80"
+    environment:
+      - VITE_GATEWAY_URL=${VITE_GATEWAY_URL:-http://192.168.1.100}
+      - VITE_GATEWAY_TOKEN=${VITE_GATEWAY_TOKEN:-}
+    restart: unless-stopped
+    networks:
+      - smarthome-network
+
+  # Backend API (Future Implementation)
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   container_name: smarthome-backend
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - NODE_ENV=production
+  #     - PORT=3000
+  #     - JWT_SECRET=${JWT_SECRET:-your-secret-key-change-this}
+  #     - GATEWAY_URL=${VITE_GATEWAY_URL:-http://192.168.1.100}
+  #     - GATEWAY_TOKEN=${VITE_GATEWAY_TOKEN:-}
+  #     - DATABASE_URL=postgresql://postgres:postgres@db:5432/smarthome
+  #     - REDIS_URL=redis://redis:6379
+  #   depends_on:
+  #     - db
+  #     - redis
+  #   restart: unless-stopped
+  #   networks:
+  #     - smarthome-network
+
+  # Database (Future Implementation)
+  # db:
+  #   image: postgres:15-alpine
+  #   container_name: smarthome-db
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_DB=smarthome
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   restart: unless-stopped
+  #   networks:
+  #     - smarthome-network
+
+  # Redis Cache (Future Implementation)
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: smarthome-redis
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis-data:/data
+  #   restart: unless-stopped
+  #   networks:
+  #     - smarthome-network
+
+  # Nginx Reverse Proxy (Future Implementation)
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: smarthome-nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./nginx/ssl:/etc/nginx/ssl:ro
+  #   depends_on:
+  #     - frontend
+  #     - backend
+  #   restart: unless-stopped
+  #   networks:
+  #     - smarthome-network
+
+networks:
+  smarthome-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:

@@ -1,0 +1,67 @@
+name: Bug Report
+description: Report a bug in the SmartHome Monitor
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the information below.
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of the bug
+      placeholder: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: dropdown
+    id: device-type
+    attributes:
+      label: Device Type
+      description: What type of device are you using?
+      options:
+        - Light
+        - Switch
+        - Plug
+        - Sensor
+        - Thermostat
+        - Curtain/Motor
+        - Fan
+        - Other
+    validations:
+      required: false
+  - type: input
+    id: gateway-version
+    attributes:
+      label: iHost Gateway Firmware Version
+      placeholder: e.g., 2.1.0
+  - type: input
+    id: browser
+    attributes:
+      label: Browser & Version
+      placeholder: e.g., Chrome 120, Firefox 121
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console Logs / Screenshots
+      description: If applicable, add console logs or screenshots
+      render: shell
